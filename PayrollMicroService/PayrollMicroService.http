@@ -1,0 +1,6 @@
+@PayrollMicroService_HostAddress = http://localhost:5134
+
+GET {{PayrollMicroService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using PayrollService.Models;
 using PayrollService.Repositories.Interface;
+using PayrollService.SharedResource;
+
 
 namespace PayrollService.Controllers
 {
@@ -11,18 +14,41 @@ namespace PayrollService.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployee employee;
+        private readonly IStringLocalizer<SharedResource.SharedResource> _stringLocalizer;
 
-        public EmployeeController(IEmployee employee)
+        public EmployeeController(IEmployee employee, IStringLocalizer<SharedResource.SharedResource> stringLocalizer)
         {
             this.employee = employee;
+            _stringLocalizer = stringLocalizer;
         }
 
         [HttpGet]
         [Route("GetEmployee")]
         public async Task<IActionResult> GetEmployee()
         {
-            var model = await employee.GetAllAsync();
-            return Ok(model);   
+            var result = await employee.GetAllAsync();
+
+            if (result == null && result?.Count > 0) {
+                var responses = new DataResponse
+                {
+                    Message = _stringLocalizer.GetString("STATUS_DATA_FOUND").Value ?? "",
+                    StatusCode = ErrorStatusCode.STATUS_SUCCESS,
+                    IsSuccess= true,
+                    Result = result 
+                };
+                return Ok(result);
+            }
+            else
+            {
+                var responses = new DataResponse
+                {
+                    Message = _stringLocalizer.GetString("STATUS_DATA_FAIL").Value ?? "",
+                    StatusCode = ErrorStatusCode.STATUS_BadRequest,
+                    IsSuccess = false,
+                    Result = result
+                };
+                return Ok(result);
+            }            
         }
 
         [HttpGet]

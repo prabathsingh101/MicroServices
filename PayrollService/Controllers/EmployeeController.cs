@@ -32,7 +32,7 @@ namespace PayrollService.Controllers
                 var responses = new DataResponse
                 {
                     Message = _stringLocalizer.GetString("STATUS_DATA_FOUND").Value ?? "",
-                    StatusCode = ErrorStatusCode.STATUS_SUCCESS,
+                    StatusCode = ErrorStatusCode.STATUS_SUCCESS, 
                     IsSuccess= true,
                     Result = result 
                 };

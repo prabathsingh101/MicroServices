@@ -18,6 +18,8 @@ namespace ProductService.Controllers
         public async Task<ActionResult> GetProducts()
         {
             var result = await productMiniContext.Products.ToListAsync();
+            //if (result.Count == 0)
+                //throw new Exception("This is a test exception.");
             return Ok(result);
         }
     }

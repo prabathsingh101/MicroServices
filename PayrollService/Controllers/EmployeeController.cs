@@ -28,27 +28,32 @@ namespace PayrollService.Controllers
         {
             var result = await employee.GetAllAsync();
 
-            if (result == null && result?.Count > 0) {
+            if (result.Count == 0)            
+                throw new Exception("This is a test exception.");            
+
+            if (result != null && result?.Count > 0)
+            {
+
                 var responses = new DataResponse
                 {
-                    Message = _stringLocalizer.GetString("STATUS_DATA_FOUND").Value ?? "",
-                    StatusCode = ErrorStatusCode.STATUS_SUCCESS, 
-                    IsSuccess= true,
-                    Result = result 
+                    Message = "STATUS_DATA_FOUND" ?? "",
+                    StatusCode = ErrorStatusCode.STATUS_SUCCESS,
+                    IsSuccess = true,
+                    Result = result
                 };
-                return Ok(result);
+                return Ok(responses);
             }
             else
             {
                 var responses = new DataResponse
                 {
-                    Message = _stringLocalizer.GetString("STATUS_DATA_FAIL").Value ?? "",
+                    Message = "STATUS_DATA_FAIL" ?? "",
                     StatusCode = ErrorStatusCode.STATUS_BadRequest,
                     IsSuccess = false,
                     Result = result
                 };
-                return Ok(result);
-            }            
+                return Ok(responses);
+            }
         }
 
         [HttpGet]

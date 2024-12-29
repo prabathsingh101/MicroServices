@@ -14,6 +14,7 @@ namespace PayrollService.Data
         {
         }
 
-        public DbSet<EmployeeModel> Employees { get; set; } 
+        public DbSet<EmployeeModel> Employees { get; set; }
+        public DbSet<ErrorLog> ErrorLogs { get; set; }
     }
 }

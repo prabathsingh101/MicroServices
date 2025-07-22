@@ -9,5 +9,7 @@ public partial class Product
 
     public string ProductName { get; set; } = null!;
 
+    public string Description { get; set; } = null!;
+
     public string? ProductImage { get; set; }
 }

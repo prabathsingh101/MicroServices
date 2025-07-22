@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using PayrollService.Data;
-using PayrollService.GlobalErrorHandle;
-using PayrollService.GlobalErrorHandleMiddleware;
 using PayrollService.Repositories.Interface;
 using PayrollService.Repositories.Services;
 
@@ -19,8 +17,7 @@ builder.Services.AddDbContext<EmployeeDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IEmployee, SQLEmployee>();
-
-builder.Services.AddScoped<IErrorLoggingService>();    
+  
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -47,7 +44,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 //app.UseMiddleware<GlobalErrorHandlingMiddleware>();
-app.UseMiddleware<GlobalExceptionMiddleware>(); 
+//app.UseMiddleware<GlobalExceptionMiddleware>(); 
 
 app.MapControllers();
 

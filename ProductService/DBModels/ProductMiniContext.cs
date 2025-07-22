@@ -17,15 +17,15 @@ public partial class ProductMiniContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }    
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Product>(entity =>
-        {
-            entity.ToTable("Product");
-        });
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //    modelBuilder.Entity<Product>(entity =>
+    //    {
+    //        entity.ToTable("Product");
+    //    });
 
-        OnModelCreatingPartial(modelBuilder);
-    }
+    //    OnModelCreatingPartial(modelBuilder);
+    //}
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

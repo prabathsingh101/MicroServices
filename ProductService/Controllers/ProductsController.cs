@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProductService.DBModels;
 
@@ -17,9 +18,19 @@ namespace ProductService.Controllers
         [HttpGet]
         public async Task<ActionResult> GetProducts()
         {
-            var result = await productMiniContext.Products.ToListAsync();
-            //if (result.Count == 0)
-                //throw new Exception("This is a test exception.");
+            var result = await productMiniContext.Products.ToListAsync();            
+            return Ok(result);
+        }
+     
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<ActionResult> GetProducts(int id)
+        {
+            var result = await productMiniContext.Products.Where(x=> x.Id == id).FirstOrDefaultAsync(); 
+            if (result == null)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
     }
